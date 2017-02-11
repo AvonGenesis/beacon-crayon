@@ -1,0 +1,4 @@
+
+*.class
+
+node_server/node_modules/

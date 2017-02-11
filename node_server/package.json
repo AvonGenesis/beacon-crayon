@@ -1,0 +1,13 @@
+{
+  "name": "beacon",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": {},
+  "license": "MIT",
+  "dependencies": {
+    "express": "4.10.2",
+    "redis": "^2.6.5",
+    "socket.io": "^1.7.2",
+    "socket.io-redis": "^3.1.0"
+  }
+}
