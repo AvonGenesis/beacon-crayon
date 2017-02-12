@@ -9,8 +9,11 @@ function update() {
     //     moveProjectile(projectile, 500, 500, 4); //TODO place holder values
     // }
 
-  for (var user in players) {
-    player = players[user];
-    player.move();
+  if (game_state == 1) {
+    for (var user in players) {
+      player = players[user];
+      player.move();
+    }
   }
+
 }

@@ -18,6 +18,7 @@
       margin: 0px;
     }
   </style>
+  <h1 id="health"></h1>
 
 </head>
 <body>
@@ -44,7 +45,12 @@
       else if (split_array[0] == 'game_state') {
         if (split_array[1] == 'end') {
           gameEnd();
+        } else if (split_array[1] == 'start') {
+          gameStart();
         }
+      }
+      else if (split_array[0] == 'boss') {
+        $("#health").html("Boss Health: " + split_array[1])
       }
     });
   </script>

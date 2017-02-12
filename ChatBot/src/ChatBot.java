@@ -7,10 +7,10 @@ public class ChatBot {
     public static void main(String[] args) throws Exception {
       // The server to connect to and our details.
       String server = "irc.chat.twitch.tv";
-      String nick = "persou";
-      String login = "persou";
+      String nick = "hackpolyplaystwitch";
+      String login = "hackpolyplaystwitch";
       // The channel which the bot will join.
-      String channel = "#avongenesis";
+      String channel = "#hackpolyplaystwitch";
 
       Socket socket = new Socket(server, 6667);
       BufferedWriter writer = new BufferedWriter(
@@ -70,7 +70,7 @@ public class ChatBot {
         // Connect directly to the IRC server.
         System.out.println("Reading from server");
         // Log on to the server.
-        writer.write("PASS oauth:ky2j5q58ray9p3eau92q08d5snqzkz\r\n");
+        writer.write("PASS oauth:os78xr7aqmuzyfxiskm9wql2armqsh\r\n");
         writer.write("NICK " + nick + "\r\n");
         writer.write("CAP REQ :twitch.tv/commands\r\n");
         // writer.write("USER " + login + " 8 * : Java IRC Hacks Bot\r\n");

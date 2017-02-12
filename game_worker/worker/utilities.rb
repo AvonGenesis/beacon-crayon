@@ -68,9 +68,16 @@ module Worker
       players = redis.smembers 'players'
       return unless players.include? user
       # return unless VALID_SPELLS.include? spell_id.downcase
-      damage = Random.rand(200..500)
+      damage = Random.rand(20..50)
       puts "Player #{user} is casting spell #{spell_id} for damage #{damage}"
       redis.publish PHASER_CHANNEL, "attack:#{user}:#{spell_id}:#{damage}"
+      redis.hincrby 'game:boss', 'health', (-1 * damage)
+
+      boss = redis.hgetall('game:boss')
+      puts "Here is the boss: #{boss}"
+      raise 'Boss does not have health key' unless boss.include? 'health'
+      health = boss['health'].to_i
+      redis.publish PHASER_CHANNEL, "boss:#{health}"
     end
 
     def self.say(redis, message)

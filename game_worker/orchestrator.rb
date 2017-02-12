@@ -46,7 +46,7 @@ class Orchestrator
       end
 
       # Sleep for 5 seconds then check again
-      sleep 5
+      sleep 2
       puts "========================\n\n"
     end
   end
@@ -63,7 +63,13 @@ class Orchestrator
     puts 'Calculating player earnings'
     @redis.publish(CHAT_BOT_CHANNEL, "say:Calculating player earnings")
     # get list of players in current game
-    list_of_players
+    @redis.publish(PHASER_CHANNEL, 'game_state:end')
+    list_of_players.each do |player|
+      gold = Random.rand(10..500)
+      @redis.hincrby("player:#{player}", 'gold', gold)
+      @redis.publish(CHAT_BOT_CHANNEL, "whisper:#{player}:You earn #{gold} gold that round")
+    end
+
     # calculate player gold and level
 
     @game_state = :standby
@@ -74,13 +80,14 @@ class Orchestrator
   def progress_game_round
     puts 'Progressing game round'
     # randomly kill boss to simulate
-    @redis.hincrby 'game:boss', 'health', (-1 * (Random.rand(5..20)))
+    # @redis.hincrby 'game:boss', 'health', (-1 * (Random.rand(5..20)))
+    @redis.publish PHASER_CHANNEL, "boss:#{boss_health}"
   end
 
   # do some stuff while we are in standby mode
   def progress_standby
     sleep 5
-    if (Time.now - @standby_time) > 30
+    if (Time.now - @standby_time) > 10
       puts 'Setting game state to playing'
       @game_state = :new_game
     end
@@ -89,12 +96,12 @@ class Orchestrator
   # Setup a new game round
   def new_game_round
     puts 'Setting boss health to 100'
-    @redis.hset 'game:boss', 'health', 100
+    @redis.hset 'game:boss', 'health', 5000
     @game_state = :playing
     @round_start_time = Time.now
     @game_round += 1
     @redis.publish(CHAT_BOT_CHANNEL, "say:Starting new game round!")
-    @redis.publish(PHASER_CHANNEL, 'game_state:end')
+    @redis.publish(PHASER_CHANNEL, 'game_state:start')
     waiting_players = @redis.smembers('waitlist')
     @redis.del('players')
     waiting_players.each do |player|
@@ -111,6 +118,7 @@ class Orchestrator
     puts 'Retrieving list of players'
     players = @redis.smembers('players')
     puts "These are the players: #{players}"
+    players
   end
 
   def boss_health

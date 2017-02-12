@@ -16,6 +16,8 @@ var players = {};
 var accessX = 300;
 var accessY = 500;
 var projectiles = []
+var game_state = 1
+var boss;
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -53,9 +55,10 @@ function create() {
   // player.anchor.set(0.5);
   // game.physics.arcade.enable(player);
   hpbar = new Phaser.Rectangle(game.world.centerX, 100, 0, 100);
-  game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
+  // game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
   // player.body.moves = true;
   tempBool = true;
+  var boss = game.add.sprite(400, 150, 'boss');
 }
 
 function drawPlayer(playerName, role) {
@@ -66,9 +69,9 @@ function drawPlayer(playerName, role) {
     y: accessY,
     attackSprite: null,
     attack: function() {
-      if (this.attackSprite != null) { this.attackSprite.destroy()}
+      if (this.attackSprite != null) { this.attackSprite.kill()}
       this.attackSprite = game.add.sprite(this.x, this.y, role+"_attack");
-      projectiles.push(this);
+      // projectiles.push(this);
     },
     move: function() {
       if (this.attackSprite == null) return;
@@ -165,16 +168,23 @@ function moveProjectile(sprite, x, y, m) {
       //sprite.destroy();
       explosion = game.add.sprite(x, y, 'explosion');
       explosion.animations.add('explosion', [0,1]);
-     explosion.animations.play('explosion', 2, false, true);
-
+      explosion.animations.play('explosion', 2, false, true);
     }
   }
 }
 
-function gameEnd() {
+function gameStart() {
+  game_state = 1;
+}
 
+function gameEnd() {
+  game_state = 0
   for (var user in players) {
     player = players[user];
+
+    if (player.attackSprite != null) {
+      player.attackSprite.kill();
+    }
     player.playerSprite.destroy();
   }
   players = {}
