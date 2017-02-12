@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="KotlinJavaRuntime">
+    <CLASSES>
+      <root url="jar://$KOTLIN_BUNDLED$/lib/kotlin-runtime.jar!/" />
+      <root url="jar://$KOTLIN_BUNDLED$/lib/kotlin-reflect.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/jedis-2.9.0.jar!/" />
+      <root url="jar://$USER_HOME$/Desktop/ChatBot/jedis-2.9.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$KOTLIN_BUNDLED$/lib/kotlin-runtime-sources.jar!/" />
+      <root url="file://$USER_HOME$/Desktop/Hackpoly2017/pircbotx/src/main/java" />
+      <root url="file://$USER_HOME$/Desktop/Hackpoly2017/pircbotx/src/test/java" />
+    </SOURCES>
+  </library>
+</component>
