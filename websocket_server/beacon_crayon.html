@@ -29,7 +29,7 @@
       // render:player
       if (split_array[0] == 'render') {
         console.log("We are rendering a player");
-        drawPlayer(split_array[1])
+        drawPlayer(split_array[1], split_array[2])
       }
       // move:player:location
       else if (split_array[0] == 'move') {
@@ -39,6 +39,7 @@
       // attack:player:spellname
       else if (split_array[0] == 'attack') {
         console.log("We are attacking")
+        players[split_array[1]].attack();
       }
     });
   </script>

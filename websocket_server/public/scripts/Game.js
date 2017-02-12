@@ -15,6 +15,7 @@ var spaceD;
 var players = {};
 var accessX = 300;
 var accessY = 500;
+var projectiles = []
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -46,24 +47,31 @@ function create() {
   hpbar = new Phaser.Rectangle(game.world.centerX, 100, 0, 100);
   //game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
 
-  player = game.add.sprite(300, 300, 'thisshit');
-  projectile = game.add.sprite(0, 0, 'projectiles');
-  projectile.kill();
-  player.anchor.set(0.5);
-  game.physics.arcade.enable(player);
+  // player = game.add.sprite(300, 300, 'thisshit');
+  // projectile = game.add.sprite(0, 0, 'projectiles');
+  // projectile.kill();
+  // player.anchor.set(0.5);
+  // game.physics.arcade.enable(player);
   hpbar = new Phaser.Rectangle(game.world.centerX, 100, 0, 100);
   game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
-  player.body.moves = true;
+  // player.body.moves = true;
   tempBool = true;
 }
 
-function drawPlayer(playerName) {
-  var playerSprite = game.add.sprite(accessX, accessY, 'warrior')
-  // arrPlayer.push(playersprite = game.add.sprite(0,0, 'mage'))
+function drawPlayer(playerName, role) {
+  var playerSprite = game.add.sprite(accessX, accessY, role)
   players[playerName] = {
-    sprite: playerSprite,
+    playerSprite: playerSprite,
     x: accessX,
-    y: accessY
+    y: accessY,
+    attackSprite: null,
+    attack: function() {
+      this.attackSprite = game.add.sprite(this.x, this.y, role+"_attack");
+      projectiles.push(this);
+    },
+    move: function() {
+      moveProjectile(this.attackSprite, 500, 500, 4);
+    }
   };
 
   accessX += 20;
