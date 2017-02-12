@@ -1,5 +1,6 @@
 require 'redis'
 REDIS_URL = 'redis://:beacon@lotus.snax.io:6379/0'.freeze
+CHAT_BOT_CHANNEL = 'game'.freeze
 trap(:INT) { puts; exit }
 
 class Orchestrator
@@ -34,6 +35,7 @@ class Orchestrator
 
       if round_over?
         puts 'Round is over!'
+        @redis.publish(CHAT_BOT_CHANNEL, "say:Round #{@game_round} is now over!")
         calculate_earnings unless @game_state.eql? :standby
       else
         progress_game_round
@@ -56,6 +58,7 @@ class Orchestrator
   # Calculate round over rewards
   def calculate_earnings
     puts 'Calculating player earnings'
+    @redis.publish(CHAT_BOT_CHANNEL, "say:Calculating player earnings")
     # get list of players in current game
     list_of_players
     # calculate player gold and level
@@ -87,6 +90,7 @@ class Orchestrator
     @game_state = :playing
     @round_start_time = Time.now
     @game_round += 1
+    @redis.publish(CHAT_BOT_CHANNEL, "say:Starting new game round!")
   end
 
   # End the game round
