@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-var game = new Phaser.Game(1200, 1000, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, render: render, update: update});
-
 var map;
 var layer;
 var mage;
@@ -12,7 +9,7 @@ var bmd;
 
   var game = new Phaser.Game(1200, 1000, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, render: render, update: update});
 
->>>>>>> origin/master
+
   function preload() {
 
       //  Tilemaps are split into two parts: The actual map data (usually stored in a CSV or JSON file)
@@ -47,6 +44,10 @@ var bmd;
   var spaceB;
   var spaceC;
   var spaceD;
+  var arrPlayer = new Array();
+  var accessX = 300;
+  var accessY = 500;
+
 
 
   function create() {
@@ -70,14 +71,16 @@ var bmd;
 
       //  This resizes the game world to match the layer dimensions
       layer.resizeWorld();
-      spaceA = game.add.sprite(800, 800, '');
+      spaceA = game.add.sprite(200, 400, null);
+      spaceB = game.add.sprite(400, 400, null);
+      spaceC = game.add.sprite(200, 500, null);
+      spaceD = game.add.sprite(400, 500, null);
 
-            player = game.add.sprite(300, 300, 'thisshit');
-            player.anchor.set(0.5);
-            game.physics.arcade.enable(player);
+            //player = game.add.sprite(arrPlayer[1], arrPlayer[2], 'thisshit');
+            //player.anchor.set(0.5);
+            //game.physics.arcade.enable(player);
             hpbar = new Phaser.Rectangle(game.world.centerX, 100, 0, 100);
-            game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
-            player.body.moves = true;
+            //game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
 
       }
 
@@ -88,42 +91,82 @@ function render(){
 function update(){
 
 }
-
-function moveToplace(location)
+function drawPlayer(split_string){
+  arrPlayer.push({PLAYER: split_string, accessX, accessY});
+  accessX += 20;
+  player = game.add.sprite(arrPlayer[1], arrPlayer[2], 'thisshit');
+  player.anchor.set(0.5);
+  game.physics.arcade.enable(player);
+  player.body.moves = true;
+  player.x = accessX;
+  player.y = accessY;
+}
+function moveToPlace(location, id)
 {
   player.body.velocity.x = 0;
   player.body.velocity.y = 0;
 
   if(location == "A")
   {
-      player.animations.add('walk', [90,91,92,93,94,95]);
-      player.animations.play('walk', 2, true);
-      player.scale.x = 1;
-      player.moveTo(800,600);
-      console.log("aersr");
-
+    arrPlayer..accessX = spaceA.x;
+    arrPlayer.id.y = spaceA.y;
+    spaceA.x += 20;
+      //arrPlayer[id].animations.add('walk', [90,91,92,93,94,95]);
+      //arrPlayer[id].animations.play('walk', 2, true);
+      //arrPlayer[id].scale.x = 1;
+      //game.physics.arcade.moveToObject(arrPlayer[id], spaceA, 60);
+      //if(10 <= (arrPlayer[id].x - spaceB.x) && 10 <= (arrPlayer[id].y - spaceB.y))
+      //{
+      //  console.log("check hit !!!!!!!!!");
+      //  stopAnimation();
+      //  arrPlayer[id].body.velocity[0,0];
+      //}
    }
   else if(location == "B")
   {
-      player.animations.add('walk', [90,91,92,93,94,95]);
-      player.animations.play('walk', 2, true);
-      player.body.velocity.x = 100;
-      player.scale.x = -1;
+    arrPlayer[id].x = spaceB.x;
+    arrPlayer[id].y = spaceB.y;
+    spaceB.x += 20;
+      // arrPlayer[id].animations.add('walk', [90,91,92,93,94,95]);
+      // arrPlayer[id].animations.play('walk', 2, true);
+      // game.physics.arcade.moveToObject(arrPlayer[id], spaceB, 60);
+      // if(arrPlayer[id].x == spaceB.x && arrPlayer[id].y == spaceB.y)
+      // {
+      //   stopAnimation();
+      //   arrPlayer[id].body.velocity[0,0];
+      // }
+      // arrPlayer[id].scale.x = -1;
 
   }
-  else if(location == "B")
+  else if(location == "C")
   {
-    player.animations.add('walk', [127,128,129,130,131]);
-    player.animations.play('walk', 2, true);
-     player.body.velocity.y = -200;
+    arrPlayer[id].x = spaceC.x;
+    arrPlayer[id].y = spaceC.y;
+    spaceC.x += 20;
+    // arrPlayer[id].animations.add('walk', [127,128,129,130,131]);
+    // arrPlayer[id].animations.play('walk', 2, true);
+    // game.physics.arcade.moveToObject(arrPlayer[id], spaceC, 60);
+    // if(arrPlayer[id].x == spaceC.x && arrPlayer[id].y == spaceC.y)
+    // {
+    //   stopAnimation();
+    //   arrPlayer[id].body.velocity[0,0];
+    // }
   }
   else if (location == "D")
   {
-
-    player.animations.add('walk', [84,86,87,89]);
-    player.animations.play('walk', 2, true);
-      player.body.velocity.y = 200;
+    arrPlayer[id].x = spaceD.x;
+    arrPlayer[id].y = spaceD.y;
+    spaceD.x += 20;
+    // arrPlayer[id].animations.add('walk', [84,86,87,89]);
+    // player.animations.play('walk', 2, true);
+    // game.physics.arcade.moveToObject(player, spaceD, 60);
+    // if(player.x == spaceD.x && player.y == spaceD.y)
+    // {
+    //   stopAnimation();
+    //   player.body.velocity[0,0];
+    // }
   }
+
 
 }
 function doneso(){
@@ -139,7 +182,3 @@ function stopAnimation() {
  player.animations.stop(null, true);
 
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
