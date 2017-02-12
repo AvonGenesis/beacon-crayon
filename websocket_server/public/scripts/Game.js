@@ -1,13 +1,8 @@
-<<<<<<< Updated upstream
-var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser', { preload: preload, create: create });
+var game = new Phaser.Game(1200, 1000, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, render: render, update: update});
 
 var map;
 var layer;
 var mage;
-var bmd;
-=======
-  var game = new Phaser.Game(1200, 1000, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, render: render, update: update});
-
   function preload() {
 
       //  Tilemaps are split into two parts: The actual map data (usually stored in a CSV or JSON file)
@@ -36,6 +31,13 @@ var bmd;
   var player;
   var cursors;
   var hpbar;
+  var doneso;
+  var location;
+  var spaceA;
+  var spaceB;
+  var spaceC;
+  var spaceD;
+
 
   function create() {
       game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -58,13 +60,16 @@ var bmd;
 
       //  This resizes the game world to match the layer dimensions
       layer.resizeWorld();
+      spaceA = game.add.sprite(800, 800, '');
 
             player = game.add.sprite(300, 300, 'thisshit');
             player.anchor.set(0.5);
             game.physics.arcade.enable(player);
             hpbar = new Phaser.Rectangle(game.world.centerX, 100, 0, 100);
+            game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
+            player.body.moves = true;
 
-    }
+      }
 
 function render(){
   game.add.sprite(hpbar, "#ff0000");
@@ -72,40 +77,48 @@ function render(){
 
 function update(){
 
-   player.body.velocity.x = 0;
-   player.body.velocity.y = 0;
-
-   if (cursors.left.isDown)
-   {
-       player.animations.add('walk', [90,91,92,93,94,95]);
-       player.animations.play('walk', 2, true);
-       player.body.velocity.x = -100;
-       player.scale.x = 1;
-   }
-   else if (cursors.right.isDown)
-   {
-       player.animations.add('walk', [90,91,92,93,94,95]);
-       player.animations.play('walk', 2, true);
-       player.body.velocity.x = 100;
-       player.scale.x = -1;
-
-   }
-
-   if (cursors.up.isDown)
-   {
-     player.animations.add('walk', [127,128,129,130,131]);
-     player.animations.play('walk', 2, true);
-      player.body.velocity.y = -200;
-   }
-   else if (cursors.down.isDown)
-   {
-
-     player.animations.add('walk', [84,86,87,89]);
-     player.animations.play('walk', 2, true);
-       player.body.velocity.y = 200;
-   }
 }
 
+function moveToplace(location)
+{
+  player.body.velocity.x = 0;
+  player.body.velocity.y = 0;
+
+  if(location == "A")
+  {
+      player.animations.add('walk', [90,91,92,93,94,95]);
+      player.animations.play('walk', 2, true);
+      player.scale.x = 1;
+      player.moveTo(800,600);
+      console.log("aersr");
+
+   }
+  else if(location == "B")
+  {
+      player.animations.add('walk', [90,91,92,93,94,95]);
+      player.animations.play('walk', 2, true);
+      player.body.velocity.x = 100;
+      player.scale.x = -1;
+
+  }
+  else if(location == "B")
+  {
+    player.animations.add('walk', [127,128,129,130,131]);
+    player.animations.play('walk', 2, true);
+     player.body.velocity.y = -200;
+  }
+  else if (location == "D")
+  {
+
+    player.animations.add('walk', [84,86,87,89]);
+    player.animations.play('walk', 2, true);
+      player.body.velocity.y = 200;
+  }
+
+}
+function doneso(){
+  player.kill();
+}
 
 function stopAnimation() {
 
@@ -116,4 +129,3 @@ function stopAnimation() {
  player.animations.stop(null, true);
 
 }
->>>>>>> Stashed changes

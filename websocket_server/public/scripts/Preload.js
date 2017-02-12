@@ -18,14 +18,11 @@ function preload() {
     game.load.image('tiles', 'assets/images/snowOGA.png');
     game.load.image('mage', 'assets/images/mage.png');
 
-<<<<<<< Updated upstream
-=======
+
   //load game assets
   this.load.tilemap('snowymap', 'assets/tilemap/snowMap.json', null, Phaser.Tilemap.TILED_JSON);
   this.load.image('gameTiles', 'assets/images/snowOGA.png');
-  },
-  create: function() {
+}
+  function create() {
     this.state.start('Game');
   }
->>>>>>> Stashed changes
-}
