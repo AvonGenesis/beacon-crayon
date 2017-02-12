@@ -12,7 +12,7 @@ BeaconCrayonGame.Preload.prototype = {
   this.load.setPreloadSprite(this.preloadBar);
 
   //load game assets
-  this.load.tilemap('practice', 'assets/tilemap/practice.json', null, Phaser.Tilemap.TILED_JSON);
+  this.load.tilemap('snowymap', 'assets/tilemap/snowMap.json', null, Phaser.Tilemap.TILED_JSON);
   this.load.image('gameTiles', 'assets/images/snowOGA.png');
   },
   create:function() {
