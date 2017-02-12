@@ -13,12 +13,12 @@ module Worker
       unless user_exist
         redis.hmset "player:#{user}", 'level', 1, 'class', 'warrior', 'gold', 0
       end
-      number_of_players = redis.scard 'players'
-      if number_of_players < PLAYER_LIMIT
+      players = redis.smembers 'players'
+      if players.length < PLAYER_LIMIT
         puts "Adding #{user} to players"
         player_class = redis.hget "player:#{user}", 'class'
         redis.sadd 'players', user
-        redis.publish PHASER_CHANNEL, "render:#{user}:#{player_class}"
+        redis.publish PHASER_CHANNEL, "render:#{user}:#{player_class}" unless players.include? user
       else
         puts "Adding #{user} to waitlist"
         redis.sadd 'waitlist', user
