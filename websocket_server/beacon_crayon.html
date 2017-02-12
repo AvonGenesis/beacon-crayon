@@ -6,6 +6,8 @@
   <script type="text/javascript" src="scripts/phaser.min.js"></script>
   <script type="text/javascript" src="scripts/Preload.js"></script>
   <script type="text/javascript" src="scripts/Create.js"></script>
+  <script type="text/javascript" src="scripts/Render.js"></script>
+  <script type="text/javascript" src="scripts/Update.js"></script>
   <script type="text/javascript" src="scripts/Game.js"></script>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
   <script src="/socket.io/socket.io.js"></script>
@@ -21,14 +23,24 @@
 <body>
   <script>
     var socket = io();
-    // $('form').submit(function(){
-    //   socket.emit('chat message', $('#m').val());
-    //   $('#m').val('');
-    //   return false;
-    // });
-    // socket.on('chat message', function(msg){
-    //   $('#messages').append($('<li>').text(msg));
-    // });
+    socket.on('message', function(msg) {
+      console.log("We got this message to process: " + msg);
+      split_array = msg.split(":");
+      // render:player
+      if (split_array[0] == 'render') {
+        console.log("We are rendering a player");
+        drawPlayer(split_array[1])
+      }
+      // move:player:location
+      else if (split_array[0] == 'move') {
+        console.log("We are moving a player")
+        // move player
+      }
+      // attack:player:spellname
+      else if (split_array[0] == 'attack') {
+        console.log("We are attacking")
+      }
+    });
   </script>
 </body>
 </html>

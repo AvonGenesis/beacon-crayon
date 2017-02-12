@@ -20,6 +20,4 @@ function create() {
 
     //	Disables anti-aliasing when we draw sprites to the BitmapData
     bmd.smoothed = false;
-
-    mage = game.make.sprite(0,0, 'mage');
 }
