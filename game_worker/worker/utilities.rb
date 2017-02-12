@@ -37,6 +37,7 @@ module Worker
       return unless redis.exists "player:#{user}"
       puts "Setting #{user} role to #{role}"
       redis.hset "player:#{user}", 'class', role
+      whisper(redis, user, "Your role has been set to #{role}")
     end
 
     # move user
