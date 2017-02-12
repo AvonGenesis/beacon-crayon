@@ -14,28 +14,44 @@ public class ChatBot {
 
       // The channel which the bot will join.
       String channel = "#avongenesis";
-
+	  
       Socket socket = new Socket(server, 6667);
       BufferedWriter writer = new BufferedWriter(
               new OutputStreamWriter(socket.getOutputStream( )));
       BufferedReader reader = new BufferedReader(
               new InputStreamReader(socket.getInputStream( )));
 
+      // Join the channel.
+      writer.write("JOIN " + channel + "\r\n");
+      writer.flush( );
         // Create pubsub object
         JedisPubSub pubsub = new JedisPubSub() {
           @Override
           // Fired off when receiving a message from redis
           public void onMessage(String redisChannel, String message) {
             System.out.println("Received Message from Redis Channel: " + redisChannel + " - " + message);
-            String msg = "PRIVMSG " + channel + " :" + message + "\r\n";
-            System.out.println(msg);
-            try {
-              writer.write(msg);
-              writer.flush();
-            } catch(IOException ioe){
-              System.out.println("We got exception");
-                //Handle exception here, most of the time you will just log it.
-            }
+			String[] botMsg = message.split(":");
+			if (botMsg[0].equals("say")){
+	            String msg = "PRIVMSG " + channel + " :" + botMsg[1] + "\r\n";
+	            System.out.println(msg);
+	            try {
+	              writer.write(msg);
+	  			  writer.flush();
+	            } catch(IOException ioe){
+	              System.out.println("We got exception");
+	                //Handle exception here, most of the time you will just log it.
+	            }
+			} else if (botMsg[0].equals("whisper")){
+	            String msg = "PRIVMSG " + channel + " :/w " + botMsg[1] + " " + botMsg[2] + "\r\n";
+	            System.out.println(msg);
+	            try {
+	              writer.write(msg);
+	  			  writer.flush();
+	            } catch(IOException ioe){
+	              System.out.println("We got exception");
+	                //Handle exception here, most of the time you will just log it.
+	            }
+			}
           }
         };
 
@@ -90,8 +106,8 @@ public class ChatBot {
         }
         System.out.println("We are done");
         // Join the channel.
-        writer.write("JOIN " + channel + "\r\n");
-        writer.flush( );
+        //writer.write("JOIN " + channel + "\r\n");
+        //writer.flush( );
 
         // Keep reading lines from the server.
 
@@ -117,7 +133,7 @@ public class ChatBot {
                      System.out.println("MSG: " + msg[2]);
 
                      if (msg[2].charAt(0) == '!'){
-                        Commands.checkCommands(msg[2]);
+                        Commands.checkCommands(msg[2], user[0]);
                      }
 
                  } catch (ArrayIndexOutOfBoundsException e){
