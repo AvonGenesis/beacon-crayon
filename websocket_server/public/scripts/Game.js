@@ -66,11 +66,13 @@ function drawPlayer(playerName, role) {
     y: accessY,
     attackSprite: null,
     attack: function() {
+      if (this.attackSprite != null) { this.attackSprite.destroy()}
       this.attackSprite = game.add.sprite(this.x, this.y, role+"_attack");
       projectiles.push(this);
     },
     move: function() {
-      moveProjectile(this.attackSprite, 500, 500, 4);
+      if (this.attackSprite == null) return;
+      moveProjectile(this.attackSprite, 500, 200, 4);
     }
   };
 
@@ -149,17 +151,6 @@ function moveToPlace(location, playerSprite) {
   }
 }
 
-function doneso() {
-  player.kill();
-}
-
-function stopAnimation() {
- //  This will just top the animation from running, freezing it at its current frame
- // greenJellyfish.animations.stop();
- //  This method will reset the frame to frame 1 after stopping
- player.animations.stop(null, true);
-}
-
 // sprite = projectile, x = destination x, y = destination y, m = velocity multiplier
 function moveProjectile(sprite, x, y, m) {
   if (!((sprite.x <= x+0.5*m) && (sprite.x >= x-0.5*m) &&
@@ -174,8 +165,17 @@ function moveProjectile(sprite, x, y, m) {
       //sprite.destroy();
       explosion = game.add.sprite(x, y, 'explosion');
       explosion.animations.add('explosion', [0,1]);
-             explosion.animations.play('explosion', 2, false, true);
+     explosion.animations.play('explosion', 2, false, true);
 
     }
   }
+}
+
+function gameEnd() {
+
+  for (var user in players) {
+    player = players[user];
+    player.playerSprite.destroy();
+  }
+  players = {}
 }

@@ -8,7 +8,9 @@ function update() {
     // if (projectile.exists) { //TODO command for projectile
     //     moveProjectile(projectile, 500, 500, 4); //TODO place holder values
     // }
-  for (attack of projectiles) {
-    attack.move();
+
+  for (var user in players) {
+    player = players[user];
+    player.move();
   }
 }

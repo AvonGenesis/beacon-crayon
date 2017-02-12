@@ -41,6 +41,11 @@
         console.log("We are attacking")
         players[split_array[1]].attack();
       }
+      else if (split_array[0] == 'game_state') {
+        if (split_array[1] == 'end') {
+          gameEnd();
+        }
+      }
     });
   </script>
 </body>

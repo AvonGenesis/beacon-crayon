@@ -34,10 +34,16 @@ module Worker
     def self.role(redis, user, role)
       # have user change role
       return unless VALID_ROLES.include? role.downcase
-      return unless redis.exists "player:#{user}"
+      user_exist = redis.exists "player:#{user}"
+      unless user_exist
+        redis.hmset "player:#{user}", 'level', 1, 'class', role, 'gold', 0
+        whisper(redis, user, "Your role has been set to #{role}")
+        puts "Setting #{user} role to #{role}"
+        return
+      end
       puts "Setting #{user} role to #{role}"
       redis.hset "player:#{user}", 'class', role
-      whisper(redis, user, "Your role has been set to #{role}")
+      whisper(redis, user, "Your role has been set to #{role}, it will change next round")
     end
 
     # move user
@@ -61,7 +67,7 @@ module Worker
     def self.attack(redis, user, spell_id)
       players = redis.smembers 'players'
       return unless players.include? user
-      return unless VALID_SPELLS.include? spell_id.downcase
+      # return unless VALID_SPELLS.include? spell_id.downcase
       damage = Random.rand(200..500)
       puts "Player #{user} is casting spell #{spell_id} for damage #{damage}"
       redis.publish PHASER_CHANNEL, "attack:#{user}:#{spell_id}:#{damage}"

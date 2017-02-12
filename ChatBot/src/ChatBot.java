@@ -98,10 +98,10 @@ public class ChatBot {
         //writer.flush( );
         // Keep reading lines from the server.
         while ((line = reader.readLine( )) != null) {
-             if (line.toLowerCase( ).startsWith("PING ")) {
+             if (line.toLowerCase( ).startsWith("ping ")) {
                  // We must respond to PINGs to avoid being disconnected.
-                 writer.write("PONG " + line.substring(5) + "\r\n");
-                 writer.write("PRIVMSG " + channel + " :I got pinged!\r\n");
+                 writer.write("PONG tmi.twitch.tv\r\n");
+                //  writer.write("PRIVMSG " + channel + " :I got pinged!\r\n");
                  writer.flush();
              }
              else {
