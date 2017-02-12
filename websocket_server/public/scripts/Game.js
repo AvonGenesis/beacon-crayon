@@ -1,7 +1,10 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 var map;
 var layer;
 var mage;
-=======
 var map;
 var layer;
 var mage;
@@ -9,7 +12,10 @@ var bmd;
 
   var game = new Phaser.Game(1200, 1000, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, render: render, update: update});
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
   function preload() {
 
       //  Tilemaps are split into two parts: The actual map data (usually stored in a CSV or JSON file)
@@ -24,12 +30,15 @@ var bmd;
       //  The final one tells Phaser the foramt of the map data, in this case it's a JSON file exported from the Tiled map editor.
       //  This could be Phaser.Tilemap.CSV too.
 
-      game.load.tilemap('snowymap', 'assets/tilemap/snowMap.json', null, Phaser.Tilemap.TILED_JSON);
-
       //  Next we load the tileset. This is just an image, loaded in via the normal way we load images:
 
       game.load.image('tiles', 'assets/images/snowOGA.png');
+	
+      game.load.tilemap('snowymap', 'assets/tilemap/snowMap.json', null, Phaser.Tilemap.TILED_JSON);
+
       game.load.spritesheet('thisshit', 'assets/images/Isaac.png', 55, 56, 209);
+      game.load.spritesheet('explosion', 'assets/images/megumin.png', 25, 25, 209);
+      game.load.spritesheet('projectiles', 'assets/images/Bullets.png', 20, 20, 299);
 
   }
 
@@ -71,6 +80,7 @@ var bmd;
 
       //  This resizes the game world to match the layer dimensions
       layer.resizeWorld();
+<<<<<<< HEAD
       spaceA = game.add.sprite(200, 400, null);
       spaceB = game.add.sprite(400, 400, null);
       spaceC = game.add.sprite(200, 500, null);
@@ -82,6 +92,19 @@ var bmd;
             hpbar = new Phaser.Rectangle(game.world.centerX, 100, 0, 100);
             //game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
 
+=======
+      spaceA = game.add.sprite(800, 800, '');
+
+            player = game.add.sprite(300, 300, 'thisshit');
+	    projectile = game.add.sprite(0, 0, 'projectiles');
+            projectile.kill();
+            player.anchor.set(0.5);
+            game.physics.arcade.enable(player);
+            hpbar = new Phaser.Rectangle(game.world.centerX, 100, 0, 100);
+            game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
+            player.body.moves = true;
+	    tempBool = true;
+>>>>>>> origin/master
       }
 
 function render(){
@@ -89,6 +112,14 @@ function render(){
 };
 
 function update(){
+     if (tempBool && !projectile.exists) {// TODO create at player when detect command >>> change tempBool to command detected
+	tempBool = false;
+	projectile.reset(player.x, player.y);
+     }	
+	
+     if(projectile.exists){ //TODO command for projectile
+	moveProjectile(projectile, 500, 500,4); //TODO place holder values
+     }
 
 }
 function drawPlayer(split_string){
@@ -182,3 +213,32 @@ function stopAnimation() {
  player.animations.stop(null, true);
 
 }
+<<<<<<< HEAD
+=======
+
+
+// sprite = projectile, x = destination x, y = destination y, m = velocity multiplier
+function moveProjectile(sprite, x, y, m){
+		
+
+	if (!((sprite.x <= x+0.5*m) && (sprite.x >= x-0.5*m) &&
+	    (sprite.y <= y+0.5*m) && (sprite.y >= y-0.5*m))) {
+	
+		sprite.x += Math.cos(Math.atan2(y-sprite.y, x - sprite.x))*m;
+		sprite.y += Math.sin(Math.atan2(y-sprite.y, x - sprite.x))*m;
+	}
+	else{
+		if (sprite.exists){
+			sprite.kill();
+			//sprite.destroy();
+			explosion = game.add.sprite(x, y, 'explosion');
+			explosion.animations.add('explosion', [0,1]);
+       			explosion.animations.play('explosion', 2, false, true);
+
+		}
+
+	}
+}
+
+
+>>>>>>> origin/master

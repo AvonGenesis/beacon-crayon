@@ -11,14 +11,11 @@ function preload() {
     //  The final one tells Phaser the foramt of the map data, in this case it's a JSON file exported from the Tiled map editor.
     //  This could be Phaser.Tilemap.CSV too.
 
-    game.load.tilemap('snowymap', 'assets/tilemap/snowMap.json', null, Phaser.Tilemap.TILED_JSON);
 
     //  Next we load the tileset. This is just an image, loaded in via the normal way we load images:
 
     game.load.image('tiles', 'assets/images/snowOGA.png');
     game.load.image('mage', 'assets/images/mage.png');
-
-<<<<<<< HEAD
 
   //load game assets
   this.load.tilemap('snowymap', 'assets/tilemap/snowMap.json', null, Phaser.Tilemap.TILED_JSON);
@@ -26,14 +23,10 @@ function preload() {
 }
   function create() {
     this.state.start('Game');
-  }
-=======
+  
+
   //load game assets
   this.load.tilemap('snowymap', 'assets/tilemap/snowMap.json', null, Phaser.Tilemap.TILED_JSON);
   this.load.image('gameTiles', 'assets/images/snowOGA.png');
   }
-  function create() {
-    this.state.start('Game');
-  }
 
->>>>>>> origin/master
