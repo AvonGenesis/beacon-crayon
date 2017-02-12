@@ -1,4 +1,4 @@
 
 *.class
 
-node_server/node_modules/
+websocket_server/node_modules/
