@@ -18,6 +18,16 @@ function preload() {
     game.load.image('tiles', 'assets/images/snowOGA.png');
     game.load.image('mage', 'assets/images/mage.png');
 
+<<<<<<< HEAD
+
+  //load game assets
+  this.load.tilemap('snowymap', 'assets/tilemap/snowMap.json', null, Phaser.Tilemap.TILED_JSON);
+  this.load.image('gameTiles', 'assets/images/snowOGA.png');
+}
+  function create() {
+    this.state.start('Game');
+  }
+=======
   //load game assets
   this.load.tilemap('snowymap', 'assets/tilemap/snowMap.json', null, Phaser.Tilemap.TILED_JSON);
   this.load.image('gameTiles', 'assets/images/snowOGA.png');
@@ -26,3 +36,4 @@ function preload() {
     this.state.start('Game');
   }
 
+>>>>>>> origin/master
