@@ -10,9 +10,6 @@ app.get('/', function(req, res){
 
 app.use(express.static('public'));
 
-
-
-
 io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('disconnect', function(){
