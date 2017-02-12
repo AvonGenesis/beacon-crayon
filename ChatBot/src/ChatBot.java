@@ -11,15 +11,14 @@ public class ChatBot {
       String login = "persou";
       // The channel which the bot will join.
       String channel = "#avongenesis";
-      
+
       Socket socket = new Socket(server, 6667);
       BufferedWriter writer = new BufferedWriter(
               new OutputStreamWriter(socket.getOutputStream( )));
       BufferedReader reader = new BufferedReader(
               new InputStreamReader(socket.getInputStream( )));
       // Join the channel.
-      writer.write("JOIN " + channel + "\r\n");
-      writer.flush( );
+
         // Create pubsub object
         JedisPubSub pubsub = new JedisPubSub() {
           @Override
@@ -75,6 +74,8 @@ public class ChatBot {
         writer.write("NICK " + nick + "\r\n");
         writer.write("CAP REQ :twitch.tv/commands\r\n");
         // writer.write("USER " + login + " 8 * : Java IRC Hacks Bot\r\n");
+        writer.flush( );
+        writer.write("JOIN " + channel + "\r\n");
         writer.flush( );
         // Read lines from the server until it tells us we have connected.
         String line = line = reader.readLine();
