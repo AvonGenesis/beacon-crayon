@@ -1,11 +1,14 @@
 var app = require('express')();
+var express = require('express');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var redis = require('redis');
 
 app.get('/', function(req, res){
-  res.sendFile('index.html');
+  res.sendfile('beacon_crayon.html');
 });
+
+app.use(express.static('public'));
 
 
 
