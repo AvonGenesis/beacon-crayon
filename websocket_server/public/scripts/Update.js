@@ -10,10 +10,16 @@ function update() {
     // }
 
   if (game_state == 1) {
+
+    boss.x -= 4*Math.cos(xCounter);
+    boss.y -= 3*Math.sin(yCounter);
+
+
     for (var user in players) {
       player = players[user];
       player.move();
     }
   }
-
+  xCounter += .04
+  yCounter += .1;
 }

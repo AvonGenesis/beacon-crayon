@@ -13,11 +13,13 @@ var spaceB;
 var spaceC;
 var spaceD;
 var players = {};
-var accessX = 300;
+var accessX = 250;
 var accessY = 500;
 var projectiles = []
 var game_state = 1
 var boss;
+var xCounter;
+var yCounter;
 
 function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -58,7 +60,9 @@ function create() {
   // game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
   // player.body.moves = true;
   tempBool = true;
-  var boss = game.add.sprite(400, 150, 'boss');
+  boss = game.add.sprite(260, 150, 'boss');
+  xCounter = 0;
+  yCounter = 0;
 }
 
 function drawPlayer(playerName, role) {
@@ -69,13 +73,13 @@ function drawPlayer(playerName, role) {
     y: accessY,
     attackSprite: null,
     attack: function() {
-      if (this.attackSprite != null) { this.attackSprite.kill()}
+      // if (this.attackSprite != null) { this.attackSprite.kill()}
       this.attackSprite = game.add.sprite(this.x, this.y, role+"_attack");
       // projectiles.push(this);
     },
     move: function() {
       if (this.attackSprite == null) return;
-      moveProjectile(this.attackSprite, 500, 200, 4);
+      moveProjectile(this.attackSprite, boss.x + 120, boss.y + 120, 6);
     }
   };
 
