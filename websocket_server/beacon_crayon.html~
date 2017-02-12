@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Beacon Crayon</title>
+  <script type="text/javascript" src="scripts/phaser.min.js"></script>
+  <script type="text/javascript" src="scripts/Preload.js"></script>
+  <script type="text/javascript" src="scripts/Create.js"></script>
+  <script type="text/javascript" src="scripts/Game.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+  <style>
+    body {
+      padding: 0px;
+      margin: 0px;
+    }
+  </style>
+
+</head>
+<body>
+  <script>
+    var socket = io();
+    // $('form').submit(function(){
+    //   socket.emit('chat message', $('#m').val());
+    //   $('#m').val('');
+    //   return false;
+    // });
+    // socket.on('chat message', function(msg){
+    //   $('#messages').append($('<li>').text(msg));
+    // });
+  </script>
+</body>
+</html>
