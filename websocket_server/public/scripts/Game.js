@@ -2,7 +2,7 @@ var map;
 var layer;
 var bmd;
 
-var game = new Phaser.Game(1200, 1000, Phaser.AUTO, 'game', { preload: preload, create: create, render: render, update: update});
+var game = new Phaser.Game(1200, 1000, Phaser.AUTO, 'game', { preload: preload, create: create, update: update});
 var player;
 var cursors;
 var hpbar;
@@ -13,7 +13,7 @@ var spaceB;
 var spaceC;
 var spaceD;
 var players = {};
-var accessX = 250;
+var accessX = 220;
 var accessY = 500;
 var projectiles = []
 var game_state = 1
@@ -22,7 +22,7 @@ var xCounter;
 var yCounter;
 
 function create() {
-  game.physics.startSystem(Phaser.Physics.ARCADE);
+  // game.physics.startSystem(Phaser.Physics.ARCADE);
   game.stage.backgroundColor = '#787878';
 
   cursors = game.input.keyboard.createCursorKeys();
@@ -48,7 +48,7 @@ function create() {
   //player = game.add.sprite(arrPlayer[1], arrPlayer[2], 'thisshit');
   //player.anchor.set(0.5);
   //game.physics.arcade.enable(player);
-  hpbar = new Phaser.Rectangle(game.world.centerX, 100, 0, 100);
+  // hpbar = new Phaser.Rectangle(game.world.centerX, 100, 0, 100);
   //game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
 
   // player = game.add.sprite(300, 300, 'thisshit');
@@ -56,10 +56,10 @@ function create() {
   // projectile.kill();
   // player.anchor.set(0.5);
   // game.physics.arcade.enable(player);
-  hpbar = new Phaser.Rectangle(game.world.centerX, 100, 0, 100);
+  // hpbar = new Phaser.Rectangle(game.world.centerX, 100, 0, 100);
   // game.time.events.add(Phaser.Timer.SECOND * 30, doneso, this);
   // player.body.moves = true;
-  tempBool = true;
+  // tempBool = true;
   boss = game.add.sprite(260, 150, 'boss');
   xCounter = 0;
   yCounter = 0;
@@ -73,7 +73,7 @@ function drawPlayer(playerName, role) {
     y: accessY,
     attackSprite: null,
     attack: function() {
-      // if (this.attackSprite != null) { this.attackSprite.kill()}
+      if (this.attackSprite != null) { this.attackSprite.destroy()}
       this.attackSprite = game.add.sprite(this.x, this.y, role+"_attack");
       // projectiles.push(this);
     },
@@ -169,7 +169,7 @@ function moveProjectile(sprite, x, y, m) {
   else{
     if (sprite.exists){
       sprite.kill();
-      //sprite.destroy();
+      // sprite.destroy();
       explosion = game.add.sprite(x, y, 'explosion');
       explosion.animations.add('explosion', [0,1]);
       explosion.animations.play('explosion', 2, false, true);
@@ -179,10 +179,18 @@ function moveProjectile(sprite, x, y, m) {
 
 function gameStart() {
   game_state = 1;
+  boss.reset(260, 150);
+  // boss.x = 260;
+  // boss.y = 150;
+  xCounter = 0;
+  yCounter = 0;
+  accessX = 250;
 }
 
 function gameEnd() {
   game_state = 0
+  $("#health").html("<span style=\"color: red\">ROUND OVER</span>");
+  boss.kill();
   for (var user in players) {
     player = players[user];
 

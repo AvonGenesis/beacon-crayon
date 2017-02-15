@@ -14,6 +14,7 @@
 
   <style>
     body {
+      background-color: black;
       padding: 0px;
       margin: 0px;
     }
@@ -46,11 +47,14 @@
         if (split_array[1] == 'end') {
           gameEnd();
         } else if (split_array[1] == 'start') {
+          // location.reload();
           gameStart();
         }
       }
       else if (split_array[0] == 'boss') {
-        $("#health").html("Boss Health: " + split_array[1])
+        if (game_state == 1) {
+          $("#health").html("<span style=\"color: white;\">Boss Health: " + split_array[1] + "</span>");s
+        }
       }
     });
   </script>

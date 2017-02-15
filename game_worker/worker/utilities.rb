@@ -19,9 +19,11 @@ module Worker
         player_class = redis.hget "player:#{user}", 'class'
         redis.sadd 'players', user
         redis.publish PHASER_CHANNEL, "render:#{user}:#{player_class}" unless players.include? user
+        whisper(redis, user, "You are now playing")
       else
         puts "Adding #{user} to waitlist"
         redis.sadd 'waitlist', user
+        whisper(redis, user, "You are now on the waitlist for next round.")
       end
     end
 
